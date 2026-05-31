@@ -11,20 +11,16 @@
     --text-color: #e2e8f0;
     --border-color: #3b82f6;
     --card-bg: #1e293b;
-    --card-border: #2563eb;
     --card-hover: #60a5fa;
-    --hover-anim-scale: 1.05;
-    --hover-anim-duration: 0.3s;
-    --hover-anim-easing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 * { box-sizing: border-box; }
 
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+    font-family: Arial, sans-serif;
+    background: linear-gradient(180deg, #0f172a, #111827);
     color: var(--text-color);
     display: flex;
     flex-direction: column;
@@ -39,88 +35,62 @@ body {
     gap: 20px;
 }
 
-#title-mainimg-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-}
-
-#page-title-img {
-    max-width: 400px;
-    width: 100%;
-}
-
-#main-big-img-container {
-    width: 100%;
+#main-big-img-container,
+#text-sidebar {
     background: var(--card-bg);
-    border: 2px solid var(--card-border);
+    border: 2px solid var(--border-color);
     border-radius: 16px;
     padding: 12px;
 }
 
-#main-big-img {
-    width: 100%;
-    display: block;
-    border-radius: 10px;
-}
-
-#text-sidebar {
-    background: var(--card-bg);
-    border: 2px solid var(--card-border);
-    border-radius: 16px;
-    padding: 20px;
-    text-align: center;
-}
-
-.page-divider {
-    width: 100%;
-    max-width: 1200px;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-    margin: 30px 0;
-    border-radius: 999px;
-}
-
-#episode-grid-container {
-    width: 100%;
-    max-width: 1200px;
-}
-
 #episode-grid {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.season-block {
+    margin-bottom: 40px;
+}
+
+.season-header {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #93c5fd;
+    margin: 15px 0;
+}
+
+.grid {
     display: grid;
     gap: 20px;
-    padding: 20px;
-    background: rgba(30, 41, 59, 0.4);
-    border: 2px solid var(--card-border);
-    border-radius: 20px;
+    padding: 15px;
+    background: rgba(30,41,59,0.4);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
 }
 
-.grid-1x1 { grid-template-columns: 1fr; }
-.grid-2xN { grid-template-columns: repeat(2, 1fr); }
-.grid-3xN { grid-template-columns: repeat(3, 1fr); }
+.grid-1 { grid-template-columns: 1fr; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
 
 .episode-item {
     display: flex;
     text-decoration: none;
     color: inherit;
     background: var(--card-bg);
-    border-radius: 16px;
-    padding: 12px;
-    transition: transform 0.3s ease, box-shadow 0.2s ease;
+    border-radius: 12px;
+    padding: 10px;
+    transition: transform 0.25s ease;
 }
 
 .episode-item:hover {
-    transform: scale(var(--hover-anim-scale));
-    box-shadow: 0 0 25px rgba(59,130,246,.5);
+    transform: scale(1.05);
 }
 
 .episode-number {
     color: #60a5fa;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: bold;
     margin-right: 12px;
-    min-width: 30px;
 }
 
 .episode-content {
@@ -132,58 +102,31 @@ body {
 .episode-image {
     width: 100%;
     aspect-ratio: 16 / 9;
-    object-fit: cover;
     background: #334155;
     border-radius: 10px;
+    object-fit: cover;
 }
 
 .episode-title {
-    margin-top: 10px;
+    margin-top: 8px;
     text-align: center;
-    font-weight: 600;
     color: #dbeafe;
+    font-weight: 600;
 }
-
-.season-header {
-    grid-column: 1 / -1;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #93c5fd;
-    margin-top: 20px;
-}
-
 </style>
 </head>
 
 <body>
 
-<div id="page-header">
-    <div id="title-mainimg-container">
-        <img id="page-title-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0ZXh0IHg9IjIwMCIgeT0iNTAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMzYiPllvdXIgVGl0bGU8L3RleHQ+PC9zdmc+">
-
-        <div id="main-big-img-container">
-            <img id="main-big-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjM2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjM2MCIgZmlsbD0iIzMzNDE1NSIvPjx0ZXh0IHg9IjMwMCIgeT0iMTgwIiBmaWxsPSIjOTNjNWZkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5IZXJvIEltYWdlPC90ZXh0Pjwvc3ZnPg==">
-        </div>
-    </div>
-
-    <div id="text-sidebar">
-        Test
-    </div>
-</div>
-
-<div class="page-divider"></div>
-
-<div id="episode-grid-container">
-    <div id="episode-grid"></div>
-</div>
+<div id="episode-grid"></div>
 
 <script>
-const grid = document.getElementById("episode-grid");
+const container = document.getElementById("episode-grid");
 
-function renderEpisode(ep) {
-    const card = document.createElement("a");
-    card.className = "episode-item";
-    card.href = ep.linkUrl || "#";
+function makeEpisode(ep) {
+    const a = document.createElement("a");
+    a.className = "episode-item";
+    a.href = ep.linkUrl || "#";
 
     const num = document.createElement("div");
     num.className = "episode-number";
@@ -204,49 +147,58 @@ function renderEpisode(ep) {
     content.appendChild(img);
     content.appendChild(title);
 
-    card.appendChild(num);
-    card.appendChild(content);
+    a.appendChild(num);
+    a.appendChild(content);
 
-    grid.appendChild(card);
+    return a;
 }
 
-function renderSeasonHeader(season) {
+function makeSeason(seasonObj) {
+    const block = document.createElement("div");
+    block.className = "season-block";
+
     const header = document.createElement("div");
     header.className = "season-header";
-    header.textContent = `Season ${season}`;
-    grid.appendChild(header);
-}
+    header.textContent = `Season ${seasonObj.season}`;
 
-function renderAllSeasons(data) {
-    grid.innerHTML = "";
+    const grid = document.createElement("div");
 
-    data.seasons.forEach(season => {
-        renderSeasonHeader(season.season);
+    const count = seasonObj.episodes.length;
 
-        const count = season.episodes.length;
+    grid.className =
+        "grid " +
+        (count === 1 ? "grid-1" :
+         count === 2 ? "grid-2" :
+         "grid-3");
 
-        grid.className =
-            count === 1 ? "grid-1x1" :
-            count === 2 ? "grid-2xN" :
-            "grid-3xN";
-
-        season.episodes.forEach(renderEpisode);
+    seasonObj.episodes.forEach(ep => {
+        grid.appendChild(makeEpisode(ep));
     });
+
+    block.appendChild(header);
+    block.appendChild(grid);
+
+    return block;
 }
 
-async function loadData() {
+async function load() {
     try {
         const res = await fetch("./stuff.json");
         const data = await res.json();
 
-        renderAllSeasons(data);
-    } catch (err) {
-        console.error(err);
-        grid.innerHTML = "<h2>Failed to load stuff.json</h2>";
+        container.innerHTML = "";
+
+        data.seasons.forEach(season => {
+            container.appendChild(makeSeason(season));
+        });
+
+    } catch (e) {
+        console.error(e);
+        container.innerHTML = "<h2>Failed to load</h2>";
     }
 }
 
-loadData();
+load();
 </script>
 
 </body>
