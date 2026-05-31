@@ -4,22 +4,22 @@
 <style>
 body {
   margin: 0;
-  padding: 20px; 
+  padding: 20px;
   background: #111;
 }
 
-#stuff {
+#container {
   position: relative;
-  height: min(500px, 100%);
-  margin: 0 auto; 
-  border: 5px solid black;
+  width: min(1200px, 100%);
+  margin: 0 auto;
   border-radius: 12px;
   overflow: hidden;
 }
 
-#stuff img {
+#containerimage {
   width: 100%;
-  height: auto;
+  height: 400px;
+  object-fit: cover;
   display: block;
 }
 
@@ -29,7 +29,7 @@ body {
   background: linear-gradient(to bottom, transparent, black);
 }
 
-.content {
+#content {
   position: absolute;
   bottom: 10px;
   left: 10px;
@@ -40,10 +40,10 @@ body {
 </head>
 <body>
 
-<div class="container" id="stuff">
-  <img src="fnaf.png" />
+<div id="container">
+  <img id="containerimage" src="fnaf.png">
   <div id="gradient"></div>
-  <div class="content">Fnaf</div>
+  <div id="content">Fnaf</div>
 </div>
 
 </body>
