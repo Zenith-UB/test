@@ -31,7 +31,6 @@ body {
     align-items: center;
 }
 
-/* HEADER */
 #page-header {
     width: 100%;
     max-width: 1200px;
@@ -83,17 +82,9 @@ body {
     border-radius: 999px;
 }
 
-/* GRID */
 #episode-grid-container {
     width: 100%;
     max-width: 1200px;
-}
-
-#season-label {
-    color: #93c5fd;
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 20px;
 }
 
 #episode-grid {
@@ -109,21 +100,18 @@ body {
 .grid-2xN { grid-template-columns: repeat(2, 1fr); }
 .grid-3xN { grid-template-columns: repeat(3, 1fr); }
 
-/* EPISODE CARD */
 .episode-item {
     display: flex;
     text-decoration: none;
     color: inherit;
     background: var(--card-bg);
-    border: 2px solid transparent;
     border-radius: 16px;
     padding: 12px;
-    transition: transform 0.3s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.2s ease;
 }
 
 .episode-item:hover {
     transform: scale(var(--hover-anim-scale));
-    border-color: var(--card-hover);
     box-shadow: 0 0 25px rgba(59,130,246,.5);
 }
 
@@ -156,36 +144,14 @@ body {
     color: #dbeafe;
 }
 
-/* FOOTER */
-#bottom-notes {
-    width: 100%;
-    max-width: 1200px;
-    margin-top: 30px;
-    padding: 20px;
-    background: var(--card-bg);
-    border: 2px solid var(--card-border);
-    border-radius: 16px;
-}
-
-.pagination-note {
-    display: block;
-    margin: 8px 0;
+.season-header {
+    grid-column: 1 / -1;
+    font-size: 1.5rem;
+    font-weight: bold;
     color: #93c5fd;
-    text-decoration: none;
+    margin-top: 20px;
 }
 
-.pagination-note:hover {
-    color: white;
-}
-
-@media (max-width: 900px) {
-    #page-header { grid-template-columns: 1fr; }
-    .grid-3xN { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 600px) {
-    .grid-3xN, .grid-2xN { grid-template-columns: 1fr; }
-}
 </style>
 </head>
 
@@ -201,92 +167,86 @@ body {
     </div>
 
     <div id="text-sidebar">
-        Season selector + description area
+        Test
     </div>
 </div>
 
 <div class="page-divider"></div>
 
 <div id="episode-grid-container">
-    <div id="season-label">Season: <span id="season-number-display">1</span></div>
     <div id="episode-grid"></div>
-</div>
-
-<div id="bottom-notes">
-    <a class="pagination-note">Pagination note</a>
-    <a class="pagination-note">More pages per season</a>
 </div>
 
 <script>
 const grid = document.getElementById("episode-grid");
-const seasonDisplay = document.getElementById("season-number-display");
 
-function renderEpisodeGrid(episodes) {
-    const count = episodes.length;
+function renderEpisode(ep) {
+    const card = document.createElement("a");
+    card.className = "episode-item";
+    card.href = ep.linkUrl || "#";
 
-    grid.className =
-        count === 1 ? "grid-1x1" :
-        count === 2 ? "grid-2xN" :
-        "grid-3xN";
+    const num = document.createElement("div");
+    num.className = "episode-number";
+    num.textContent = ep.number;
 
+    const content = document.createElement("div");
+    content.className = "episode-content";
+
+    const img = document.createElement("img");
+    img.className = "episode-image";
+    img.src = ep.imageUrl || "";
+    img.alt = ep.title;
+
+    const title = document.createElement("div");
+    title.className = "episode-title";
+    title.textContent = ep.title;
+
+    content.appendChild(img);
+    content.appendChild(title);
+
+    card.appendChild(num);
+    card.appendChild(content);
+
+    grid.appendChild(card);
+}
+
+function renderSeasonHeader(season) {
+    const header = document.createElement("div");
+    header.className = "season-header";
+    header.textContent = `Season ${season}`;
+    grid.appendChild(header);
+}
+
+function renderAllSeasons(data) {
     grid.innerHTML = "";
 
-    episodes.forEach(ep => {
-        const a = document.createElement("a");
-        a.className = "episode-item";
-        a.href = ep.linkUrl || "#";
+    data.seasons.forEach(season => {
+        renderSeasonHeader(season.season);
 
-        const num = document.createElement("div");
-        num.className = "episode-number";
-        num.textContent = ep.number;
+        const count = season.episodes.length;
 
-        const content = document.createElement("div");
-        content.className = "episode-content";
+        grid.className =
+            count === 1 ? "grid-1x1" :
+            count === 2 ? "grid-2xN" :
+            "grid-3xN";
 
-        const img = document.createElement("img");
-        img.className = "episode-image";
-        img.src = ep.imageUrl || "";
-        img.alt = ep.title;
-
-        const title = document.createElement("div");
-        title.className = "episode-title";
-        title.textContent = ep.title;
-
-        content.appendChild(img);
-        content.appendChild(title);
-
-        a.appendChild(num);
-        a.appendChild(content);
-
-        grid.appendChild(a);
+        season.episodes.forEach(renderEpisode);
     });
 }
 
-async function loadSeason() {
+async function loadData() {
     try {
-        const res = await fetch("stuff.json");
+        const res = await fetch("./stuff.json");
         const data = await res.json();
 
-        const params = new URLSearchParams(location.search);
-        const seasonNum = Number(params.get("season")) || 1;
-
-        const season = data.seasons.find(s => s.season === seasonNum);
-
-        if (!season) {
-            grid.innerHTML = "<h2>Season not found</h2>";
-            return;
-        }
-
-        seasonDisplay.textContent = season.season;
-        renderEpisodeGrid(season.episodes);
-
-    } catch (e) {
-        console.error(e);
+        renderAllSeasons(data);
+    } catch (err) {
+        console.error(err);
         grid.innerHTML = "<h2>Failed to load stuff.json</h2>";
     }
 }
 
-loadSeason();
+loadData();
 </script>
 
 </body>
