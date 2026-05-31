@@ -9,17 +9,20 @@ body {
 }
 
 #container {
-  --card-width: 1600px;  
-  --aspect: 16 / 6;     
+  --card-width: 1600px;
+  --aspect: 16 / 6;
 
   position: relative;
   width: min(var(--card-width), 100%);
   aspect-ratio: var(--aspect);
 
   margin: 0 auto;
+
   border: 2px solid black;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 #image {
@@ -27,20 +30,28 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.6s ease;
+}
+
+#container:hover #image {
+  transform: scale(1.05);
 }
 
 #gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent, black);
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.9));
 }
 
-#content {
+#text {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: 14px;
+  left: 14px;
   color: white;
+  font-size: 28px;
+  font-family: Arial, sans-serif;
   z-index: 2;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
 }
 </style>
 </head>
@@ -49,7 +60,7 @@ body {
 <div id="container">
   <img id="image" src="fnaf.png">
   <div id="gradient"></div>
-  <div id="content">Fnaf</div>
+  <div id="text">Fnaf</div>
 </div>
 
 </body>
