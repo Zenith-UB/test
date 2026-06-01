@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
+<title>Episode Layout Mockup</title>
 
 <style>
 :root {
@@ -11,7 +11,6 @@
     --text-color: #e2e8f0;
     --border-color: #3b82f6;
     --card-bg: #1e293b;
-    --card-hover: #60a5fa;
 }
 
 * { box-sizing: border-box; }
@@ -27,6 +26,7 @@ body {
     align-items: center;
 }
 
+/* HEADER */
 #page-header {
     width: 100%;
     max-width: 1200px;
@@ -69,6 +69,7 @@ body {
     text-align: center;
 }
 
+/* GRID */
 #episode-grid {
     width: 100%;
     max-width: 1200px;
@@ -98,6 +99,7 @@ body {
 .grid-2 { grid-template-columns: repeat(2, 1fr); }
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
 
+/* EPISODE CARD */
 .episode-item {
     display: flex;
     text-decoration: none;
@@ -105,11 +107,21 @@ body {
     background: var(--card-bg);
     border-radius: 12px;
     padding: 10px;
-    transition: transform 0.25s ease;
+
+    transition:
+        transform 0.35s cubic-bezier(0.2, 1.4, 0.3, 1),
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
 }
 
+/* ⭐ BOUNCY + BLUE GLOW HOVER */
 .episode-item:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
+    box-shadow:
+        0 0 12px #3b82f6,
+        0 0 25px #3b82f6,
+        0 0 45px rgba(59,130,246,0.7);
+    filter: brightness(1.2);
 }
 
 .episode-number {
@@ -145,36 +157,29 @@ body {
 
 <body>
 
+<!-- HEADER -->
 <div id="page-header">
 
     <div id="title-mainimg-container">
         <img id="page-title-img"
-        src="title.png"
+        src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0ZXh0IHg9IjIwMCIgeT0iNTAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMzYiPllvdXIgVGl0bGU8L3RleHQ+PC9zdmc+"
         alt="title">
-
-        <div id="main-big-img-container">
-            <img id="main-big-img"
-            src="fnaf.png"
-            alt="hero">
-        </div>
     </div>
 
     <div id="text-sidebar">
-        Test
+        Season info / description
     </div>
 
 </div>
 
-<div style="width:100%;max-width:1200px;height:4px;background:#3b82f6;margin:20px 0;border-radius:999px;"></div>
-
-<div id="episode-grid"></div>
+<div id="episodes"></div>
 
 <script>
-const container = document.getElementById("episode-grid");
+const container = document.getElementById("episodes");
 
 function makeEpisode(ep) {
     const a = document.createElement("a");
-    a.className = "episode-item";
+    a.className = "episode";
     a.href = ep.linkUrl || "#";
 
     const num = document.createElement("div");
@@ -230,20 +235,14 @@ function makeSeason(seasonObj) {
 }
 
 async function load() {
-    try {
-        const res = await fetch("./stuff.json");
-        const data = await res.json();
+    const res = await fetch("./stuff.json");
+    const data = await res.json();
 
-        container.innerHTML = "";
+    container.innerHTML = "";
 
-        data.seasons.forEach(season => {
-            container.appendChild(makeSeason(season));
-        });
-
-    } catch (e) {
-        console.error(e);
-        container.innerHTML = "<h2>Failed to load</h2>";
-    }
+    data.seasons.forEach(season => {
+        container.appendChild(makeSeason(season));
+    });
 }
 
 load();
