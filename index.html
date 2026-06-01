@@ -27,7 +27,8 @@ body {
     align-items: center;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
+
 #page-header {
     width: 100%;
     max-width: 1200px;
@@ -70,12 +71,14 @@ body {
     text-align: center;
 }
 
-/* SEASONS */
+/* ================= SEASONS ================= */
+
 #episode-grid {
     width: 100%;
     max-width: 1200px;
 }
 
+/* each season wrapper */
 .season-block {
     margin-bottom: 40px;
 }
@@ -87,6 +90,7 @@ body {
     margin: 10px 0;
 }
 
+/* grid base */
 .grid {
     display: grid;
     gap: 20px;
@@ -96,11 +100,13 @@ body {
     border-radius: 16px;
 }
 
+/* responsive layouts */
 .grid-1 { grid-template-columns: 1fr; }
 .grid-2 { grid-template-columns: repeat(2, 1fr); }
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
 
-/* EPISODE CARD */
+/* ================= EPISODE CARD ================= */
+
 .episode-item {
     display: flex;
     text-decoration: none;
@@ -108,20 +114,11 @@ body {
     background: var(--card-bg);
     border-radius: 12px;
     padding: 10px;
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        filter 0.25s ease;
+    transition: transform 0.25s ease;
 }
 
-/* ⭐ BLUE GLOW HOVER EFFECT */
 .episode-item:hover {
-    transform: scale(1.06);
-    box-shadow:
-        0 0 15px #3b82f6,
-        0 0 30px #3b82f6,
-        0 0 50px rgba(59,130,246,0.6);
-    filter: brightness(1.15);
+    transform: scale(1.05);
 }
 
 .episode-number {
@@ -161,8 +158,14 @@ body {
 
     <div id="title-mainimg-container">
         <img id="page-title-img"
-        src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0ZXh0IHg9IjIwMCIgeT0iNTAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMzYiPllvdXIgVGl0bGU8L3RleHQ+PC9zdmc+"
+        src="title.png"
         alt="title">
+
+        <div id="main-big-img-container">
+            <img id="main-big-img"
+            src="fnaf.png"
+            alt="hero">
+        </div>
     </div>
 
     <div id="text-sidebar">
@@ -234,14 +237,20 @@ function makeSeason(seasonObj) {
 }
 
 async function load() {
-    const res = await fetch("./stuff.json");
-    const data = await res.json();
+    try {
+        const res = await fetch("./stuff.json");
+        const data = await res.json();
 
-    container.innerHTML = "";
+        container.innerHTML = "";
 
-    data.seasons.forEach(season => {
-        container.appendChild(makeSeason(season));
-    });
+        data.seasons.forEach(season => {
+            container.appendChild(makeSeason(season));
+        });
+
+    } catch (e) {
+        console.error(e);
+        container.innerHTML = "<h2>Failed to load</h2>";
+    }
 }
 
 load();
