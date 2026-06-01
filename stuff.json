@@ -1,17 +1,20 @@
 {
   "seasons": [
     {
-      "season": 1,
+      "season": 0,
       "episodes": [
-        { "number": 1, "title": "Episode 1", "imageUrl": "", "linkUrl": "#" },
-        { "number": 2, "title": "Episode 2", "imageUrl": "", "linkUrl": "#" },
-        { "number": 3, "title": "Episode 3", "imageUrl": "", "linkUrl": "#" }
-      ]
-    },
-    {
-      "season": 2,
-      "episodes": [
-        { "number": 1, "title": "Season 2 Ep 1", "imageUrl": "", "linkUrl": "#" }
+        {
+          "number": 1,
+          "title": "Fnaf 1",
+          "imageUrl": "1.png",
+          "linkUrl": "./1"
+        },
+        {
+          "number": 2,
+          "title": "Fnaf 2",
+          "imageUrl": "2.png",
+          "linkUrl": "./2"
+        }
       ]
     }
   ]
