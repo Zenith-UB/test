@@ -11,6 +11,7 @@
     --text-color: #e2e8f0;
     --border-color: #3b82f6;
     --card-bg: #1e293b;
+    --card-hover: #60a5fa;
 }
 
 * { box-sizing: border-box; }
@@ -69,7 +70,7 @@ body {
     text-align: center;
 }
 
-/* GRID */
+/* SEASONS */
 #episode-grid {
     width: 100%;
     max-width: 1200px;
@@ -107,21 +108,20 @@ body {
     background: var(--card-bg);
     border-radius: 12px;
     padding: 10px;
-
     transition:
-        transform 0.35s cubic-bezier(0.2, 1.4, 0.3, 1),
+        transform 0.25s ease,
         box-shadow 0.25s ease,
         filter 0.25s ease;
 }
 
-/* ⭐ BOUNCY + BLUE GLOW HOVER */
+/* ⭐ BLUE GLOW HOVER EFFECT */
 .episode-item:hover {
-    transform: scale(1.08);
+    transform: scale(1.06);
     box-shadow:
-        0 0 12px #3b82f6,
-        0 0 25px #3b82f6,
-        0 0 45px rgba(59,130,246,0.7);
-    filter: brightness(1.2);
+        0 0 15px #3b82f6,
+        0 0 30px #3b82f6,
+        0 0 50px rgba(59,130,246,0.6);
+    filter: brightness(1.15);
 }
 
 .episode-number {
@@ -157,7 +157,6 @@ body {
 
 <body>
 
-<!-- HEADER -->
 <div id="page-header">
 
     <div id="title-mainimg-container">
@@ -167,19 +166,19 @@ body {
     </div>
 
     <div id="text-sidebar">
-        Season info / description
+        Test
     </div>
 
 </div>
 
-<div id="episodes"></div>
+<div id="episode-grid"></div>
 
 <script>
-const container = document.getElementById("episodes");
+const container = document.getElementById("episode-grid");
 
 function makeEpisode(ep) {
     const a = document.createElement("a");
-    a.className = "episode";
+    a.className = "episode-item";
     a.href = ep.linkUrl || "#";
 
     const num = document.createElement("div");
